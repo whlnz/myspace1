@@ -1,0 +1,55 @@
+trigger:
+- main
+- release
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  tagName: 'release'
+
+jobs:
+- job: Build
+  steps:
+  - script: echo Building...
+    displayName: 'Run a one-line script'
+
+  - powershell: |
+      $personalAccessToken = "$(System.AccessToken)"
+      $buildId = "$(Build.BuildId)"
+      $projectId = "$(System.TeamProjectId)"
+      $organizationUrl = "$(System.CollectionUri)"
+      
+      $uri = "$($organizationUrl)$($projectId)/_apis/build/builds/$($buildId)?api-version=6.0"
+      
+      $body = @{
+          keepforever = $true
+      } | ConvertTo-Json
+      
+      $headers = @{
+          Authorization = "Bearer $personalAccessToken"
+          "Content-Type" = "application/json"
+      }
+      
+      Invoke-RestMethod -Uri $uri -Method Patch -Body $body -Headers $headers
+    displayName: 'Retain Build'
+    env:
+      System.AccessToken: $(System.AccessToken)
+  
+  - powershell: |
+      $personalAccessToken = "$(System.AccessToken)"
+      $buildId = "$(Build.BuildId)"
+      $projectId = "$(System.TeamProjectId)"
+      $organizationUrl = "$(System.CollectionUri)"
+
+      $uri = "$($organizationUrl)$($projectId)/_apis/build/builds/$($buildId)/tags/Test?api-version=7.1-preview.3"
+
+      $headers = @{
+          Authorization = "Bearer $personalAccessToken"
+          "Content-Type" = "application/json"
+      }
+      
+      Invoke-RestMethod -Uri $uri -Method Put -Headers $headers
+    displayName: 'Add Tags to Build'
+    env:
+      System.AccessToken: $(System.AccessToken)
