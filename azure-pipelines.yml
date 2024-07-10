@@ -7,8 +7,8 @@ trigger:
 - main
 
 pool:
-  name: Default1
-  demands: maven
+  name: Default
+  demands: maven1
 
 steps:
 - task: Maven@3
