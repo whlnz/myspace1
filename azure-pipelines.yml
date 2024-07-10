@@ -6,6 +6,9 @@
 trigger:
 - main
 
+pool:
+  name: default
+
 steps:
 - task: Maven@3
   inputs:
