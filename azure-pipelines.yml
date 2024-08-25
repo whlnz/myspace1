@@ -26,5 +26,5 @@ steps:
   inputs:
     serviceConnectionEndpoint: 'Snyk'
     testType: 'app'
-    failOnIssues: false
+    failOnIssues: true
     monitorWhen: 'always'
