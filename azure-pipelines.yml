@@ -48,3 +48,18 @@ steps:
       # Enregistrer la nouvelle version dans la variable de build
       echo "##vso[task.setvariable variable=version]$newVersion"
   displayName: 'Incrémenter le patch dans version.txt'
+
+- script: |
+    git config --global user.name "BuildAgent"
+    git config --global user.email "buildagent@mycompany.com"
+    git add version.txt
+    git commit -m "Incrémentation de la version à $(version)"
+    git push origin HEAD:main
+  displayName: 'Valider et pousser le fichier de version'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'byBuild'
+    version: $(version)
