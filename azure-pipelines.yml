@@ -50,8 +50,8 @@ steps:
   displayName: 'Incrémenter le patch dans version.txt'
 
 - script: |
-    git config --global user.name "BuildAgent"
-    git config --global user.email "buildagent@mycompany.com"
+    git config --global user.name "jamil"
+    git config --global user.email "abidijamil@gmail.com"
     git add version.txt
     git commit -m "Incrémentation de la version à $(version)"
     git push origin HEAD:main
