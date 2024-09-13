@@ -52,6 +52,7 @@ steps:
 - script: |
     git config --global user.name "jamil"
     git config --global user.email "abidijamil@gmail.com"
+    git remote set-url origin https://$(GITHUB_TOKEN)@github.com/jamilabidi/pipelines-java.git
     git add version.txt
     git commit -m "Incrémentation de la version à $(version)"
     git push origin HEAD:main
