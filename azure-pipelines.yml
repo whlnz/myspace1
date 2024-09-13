@@ -35,9 +35,24 @@ steps:
       $minor = [int]$versionParts[1]
       $patch = [int]$versionParts[2]
       
+      # Afficher la version actuelle
+      echo "Version actuelle : $major.$minor.$patch"
+      
       # Décider de la partie à incrémenter (ici le patch)
       $patch++
       
+      # Si un changement du numéro mineur est détecté, incrémenter le mineur et remettre le patch à zéro
+      if ($env:NEW_MINOR -and $minor -ne $env:NEW_MINOR) {
+          echo "Incrémentation de la version mineure..."
+          $minor = [int]$env:NEW_MINOR
+          $patch = 0
+          $newVersion = "$major.$minor.$patch-rc"
+      } else {
+          echo "Aucune modification de la version mineure, incrémentation du patch..."
+          $patch++
+          $newVersion = "$major.$minor.$patch"
+      }
+
       # Construire la nouvelle version
       $newVersion = "$major.$minor.$patch"
       echo "Nouvelle version : $newVersion"
