@@ -1,4 +1,4 @@
-
+[![Build Status](https://dev.azure.com/karnatipraveenchowdary/Karnati/_apis/build/status%2FKarnati?branchName=main)](https://dev.azure.com/karnatipraveenchowdary/Karnati/_build/latest?definitionId=6&branchName=main)
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
